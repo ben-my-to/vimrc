@@ -1,3 +1,2 @@
 # .vimrc
-
-## My Current Vimrc
+My Current Vimrc

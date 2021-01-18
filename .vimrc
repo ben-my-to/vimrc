@@ -1,27 +1,35 @@
 syntax on
 
 "Themes
-let x = 0
-
+let x=2
 if x==0
     colorscheme one
     set background:dark
+    let g:airline_theme='one'
 elseif x==1
-    colorscheme dracula
-elseif x==2
-    colorscheme gruvbox
-    set background:dark
-elseif x==3
     set background:dark
     colorscheme papercolor
+elseif x==2
+    colorscheme molokai 
+    let g:airline_theme='molokai'
+elseif x==3 
+    colorscheme gruvbox
+    let g:airline_theme='gruvbox'
+    set background:dark
+elseif x==4
+    colorscheme dracula
+    let g:airline_theme='dracula'
+elseif x==5
+    colorscheme lucid
 endif
 
 "Compiler
 set splitbelow
 autocmd filetype cpp nnoremap <C-b> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR>
 autocmd filetype cpp nnoremap <C-Enter> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
-autocmd filetype cpp imap <C-Enter> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
+autocmd filetype cpp imap <C-Enter> ii:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
 autocmd filetype cpp nnoremap <S-CR> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
+autocmd filetype cpp imap <S-CR> ii:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
 
 "Disables Beep Sound
 set noerrorbells visualbell t_vb=
@@ -38,17 +46,38 @@ set nowrap
 set smartcase
 set noswapfile
 set nobackup
-set undodir=~/.vim/undodir
-set undofile
 set incsearch
 set lines=45 columns=130
 set colorcolumn=0
 set backspace=indent,eol,start
 
+"<!-- INSTALL PLUGIN HERE: -->
+"iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`ni $HOME/vimfiles/autoload/plug.vim -Force
+let g:airline#extensions#whitespace#enabled = 0
+call plug#begin('~/.vim/plugged')
+
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/syntastic'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+call plug#end()
+
+"Remap Normal Mode
 inoremap ii <Esc>
-map <Enter> o<Esc>
+
+"New Line
 map o oii
+map <Enter> o<Esc>
+
+"Back Line
 map O Oii
+
+"End of Line
+map ; $a
 
 set guioptions-=r
 function! ToggleGUICruft()
@@ -60,7 +89,10 @@ function! ToggleGUICruft()
 endfunction
 map <F11> <Esc>:call ToggleGUICruft()<cr>
 set guioptions=i
-highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+"key": "escape",      
+"command": "removeSecondaryCursors",
+"when": "editorHasMultipleSelections && textInputFocus"
 
 "Next Tab
 nmap <C-Tab> gt
@@ -86,14 +118,25 @@ vnoremap <S-Del> "+x
 vnoremap <C-C> "+y
 vnoremap <C-Insert> "+y
 
-"Paste/Insert
+"Paste
 map <C-V>       "+gP
 cmap <C-V>      <C-R>+
 exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
 exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
 
+"Split (Vertical) Screen
+set splitright
+noremap <C-o> :vsp newfile.cpp <CR>
+
+"Navigate Splits 
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
+
 "Vim Directory
-map <C-p> :e ./vim <Enter>
+map <C-p> :NERDTree <Enter>
+let g:NERDTreeWinPos = "right"
 
 "Source + Create New File
 map <F2> :w newfile.cpp <Enter> 
@@ -113,25 +156,19 @@ map <C-s> :w <Enter>
 imap <C-s> ii:w <Enter>a
 
 "Find
+set ignorecase
 map <C-f> /
 imap <C-f> ii/
 
 "Normal Mode Comment
-map <S-c> i"
-
-"Split (Vertical) Screen
-set splitright
-noremap <C-o> :vsp newfile.cpp <CR>
-
-"Tab (Command Mode)
-map <Tab> i<Tab>iia
+map <S-c> 0i"
+   
+"Tab (Command Mode)   
+map <Tab> i <Tab>iia
 
 "Auto {}/[]
-imap { {<CR>}iiO
-imap [ []iii 
-
-"End of Line
-map ; $
+imap { {}iii
+imap [ []iii
 
 "Fonts
 if has("gui_running")
@@ -145,4 +182,7 @@ if has("gui_running")
 endif
 
 "Templates
-:ab ttt #include <iostream><CR>#include <string><CR>#include <vector><CR><CR>using namespace std;<CR><CR>int main(){<CR><CR>return 0;<CR>}
+:ab exe_template #include <iostream><CR>#include <string><CR>#include <vector><CR><CR>using namespace std;<CR><CR>int main(){<CR><Tab>return 0;<CR><BS>iikOO<Tab>
+:ab exe_class class {<CR><CR>iikiprivate:<CR><Tab><CR>public:<CR><Tab>iija;iikkkkklllli
+
+

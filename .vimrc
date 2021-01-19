@@ -1,7 +1,11 @@
+"<!-- Download AutoHotKey are use this script command: CapsLock::Esc -->
+"<!-- INSTALL PLUGIN HERE: -->
+"iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`ni $HOME/vimfiles/autoload/plug.vim -Force
+
 syntax on
 
 "Themes
-let x=2
+let x=0
 if x==0
     colorscheme one
     set background:dark
@@ -23,13 +27,19 @@ elseif x==5
     colorscheme lucid
 endif
 
-"Compiler
+"C++ 
 set splitbelow
 autocmd filetype cpp nnoremap <C-b> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR>
 autocmd filetype cpp nnoremap <C-Enter> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
-autocmd filetype cpp imap <C-Enter> ii:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
+autocmd filetype cpp imap <C-Enter> <esc>:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
 autocmd filetype cpp nnoremap <S-CR> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
-autocmd filetype cpp imap <S-CR> ii:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
+autocmd filetype cpp imap <S-CR> <esc>:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
+
+"Python 
+autocmd FileType python map <buffer> <S-CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <S-CR> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python map <buffer> <C-Enter> :w<CR>:ter python3 "%"<CR>
+autocmd FileType python imap <buffer> <C-Enter> <esc>:w<CR>:ter python3 "%"<CR>
 
 "Disables Beep Sound
 set noerrorbells visualbell t_vb=
@@ -51,33 +61,39 @@ set lines=45 columns=130
 set colorcolumn=0
 set backspace=indent,eol,start
 
-"<!-- INSTALL PLUGIN HERE: -->
-"iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`ni $HOME/vimfiles/autoload/plug.vim -Force
 let g:airline#extensions#whitespace#enabled = 0
 call plug#begin('~/.vim/plugged')
 
+Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/syntastic'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 call plug#end()
 
-"Remap Normal Mode
-inoremap ii <Esc>
-
 "New Line
-map o oii
+map o o<esc>
 map <Enter> o<Esc>
 
 "Back Line
-map O Oii
+map O O<esc>
 
 "End of Line
 map ; $a
+
+"Delete Line
+map da sax<CR>k
+
+"Delete Word
+map dw diw
+
+"Select Line
+map sa V
+
+"Select Word
+map sw viw
 
 set guioptions-=r
 function! ToggleGUICruft()
@@ -90,24 +106,20 @@ endfunction
 map <F11> <Esc>:call ToggleGUICruft()<cr>
 set guioptions=i
 
-"key": "escape",      
-"command": "removeSecondaryCursors",
-"when": "editorHasMultipleSelections && textInputFocus"
-
 "Next Tab
 nmap <C-Tab> gt
-imap <C-Tab> iigti
+imap <C-Tab> <esc>gti
 
 "Prev Tab
 nmap <S-Tab> gT
-imap <S-Tab> iigTi
+imap <S-Tab> <esc>gTi
 
 "Select All
 map <C-a> GVgg
-imap <C-a> iiGVggi
+imap <C-a> <esc>GVggi
 
 "Undo
-imap <C-Z> iiui
+imap <C-Z> <esc>ui
 nnoremap <C-Z> u
 
 "Cut
@@ -141,39 +153,41 @@ let g:NERDTreeWinPos = "right"
 "Source + Create New File
 map <F2> :w newfile.cpp <Enter> 
 map <F1> :source% <Enter>
-imap <F1> ii:source% <Enter>i
+imap <F1> <esc>:source% <Enter>i
 
 "Exit Vim
 map <C-W> :q! <Enter>
-imap <C-W> ii:q! <Enter> i
+imap <C-W> <esc>:q! <Enter> i
 
 "New Tab
 map <C-t> :tabnew <Enter>
-imap <C-t> ii:tabnew <Enter> i
+imap <C-t> <esc>:tabnew <Enter> i
 
 "Save File
 map <C-s> :w <Enter>
-imap <C-s> ii:w <Enter>a
+imap <C-s> <esc>:w <Enter>a
 
 "Find
 set ignorecase
 map <C-f> /
-imap <C-f> ii/
+imap <C-f> <esc>/
 
 "Normal Mode Comment
+autocmd FileType python map <S-c> 0i#
+autocmd FileType cpp map <S-c> 0i//
 map <S-c> 0i"
    
 "Tab (Command Mode)   
-map <Tab> i <Tab>iia
+map <Tab> i <Tab><esc>a
 
 "Auto {}/[]
-imap { {}iii
-imap [ []iii
+imap { {}<esc>i
+imap [ []<esc>i
 
 "Fonts
 if has("gui_running")
   if has("gui_gtk2")
-    set guifont=Inconsolata\ 12
+    set guifont=Hack-Regular\ 12
   elseif has("gui_macvim")
     set guifont=Menlo\ Regular:h14
   elseif has("gui_win32")
@@ -182,7 +196,5 @@ if has("gui_running")
 endif
 
 "Templates
-:ab exe_template #include <iostream><CR>#include <string><CR>#include <vector><CR><CR>using namespace std;<CR><CR>int main(){<CR><Tab>return 0;<CR><BS>iikOO<Tab>
-:ab exe_class class {<CR><CR>iikiprivate:<CR><Tab><CR>public:<CR><Tab>iija;iikkkkklllli
-
-
+autocmd filetype cpp :ab exe_template #include <iostream><CR>#include <string><CR>#include <vector><CR><CR>using namespace std;<CR><CR>int main(){<CR><Tab>return 0;<CR>i<BS><esc>kOO<Tab>
+autocmd filetype cpp :ab exe_class class {<CR><CR><esc>kiprivate:<CR><Tab><CR>public:<CR><Tab><esc>ja;<esc>kkkkklllli

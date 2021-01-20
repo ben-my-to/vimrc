@@ -5,7 +5,7 @@
 syntax on
 
 "Themes
-let x=0
+let x=3
 if x==0
     colorscheme one
     set background:dark
@@ -60,6 +60,8 @@ set incsearch
 set lines=45 columns=130
 set colorcolumn=0
 set backspace=indent,eol,start
+let skip_defaults_vim=1
+set viminfo=""
 
 let g:airline#extensions#whitespace#enabled = 0
 call plug#begin('~/.vim/plugged')
@@ -84,7 +86,8 @@ map O O<esc>
 map ; $a
 
 "Delete Line
-map da sax<CR>k
+map da saxk<CR>
+map dd ddk
 
 "Delete Word
 map dw diw
@@ -103,7 +106,6 @@ function! ToggleGUICruft()
     exec('set guioptions=i')
   endif
 endfunction
-map <F11> <Esc>:call ToggleGUICruft()<cr>
 set guioptions=i
 
 "Next Tab
@@ -147,7 +149,7 @@ nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
 "Vim Directory
-map <C-p> :NERDTree <Enter>
+map <C-p> :NERDTree <Enter> Bj
 let g:NERDTreeWinPos = "right"
 
 "Source + Create New File
@@ -187,7 +189,7 @@ imap [ []<esc>i
 "Fonts
 if has("gui_running")
   if has("gui_gtk2")
-    set guifont=Hack-Regular\ 12
+    set guifont=RobotoMono\ 12
   elseif has("gui_macvim")
     set guifont=Menlo\ Regular:h14
   elseif has("gui_win32")
@@ -198,3 +200,5 @@ endif
 "Templates
 autocmd filetype cpp :ab exe_template #include <iostream><CR>#include <string><CR>#include <vector><CR><CR>using namespace std;<CR><CR>int main(){<CR><Tab>return 0;<CR>i<BS><esc>kOO<Tab>
 autocmd filetype cpp :ab exe_class class {<CR><CR><esc>kiprivate:<CR><Tab><CR>public:<CR><Tab><esc>ja;<esc>kkkkklllli
+
+

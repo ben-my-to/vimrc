@@ -8,26 +8,24 @@ set encoding=utf-8
 "Themes
 let x=0
 if x==0
-   colorscheme papercolor
-   let g:airline_theme='base16_vim'
-"   #1c1c1c
+   colorscheme papaya
+"   #1f1e24
 elseif x==1
+   colorscheme papercolor
+"   #1c1c1c
+elseif x==2
    colorscheme gruvbox
-   let g:airline_theme='base16_gruvbox_dark_hard'
    set background:dark
 "   #282828
-elseif x==2
-   colorscheme molokai 
-   let g:airline_theme='molokai'
 elseif x==3
-   colorscheme dracula
-   let g:airline_theme='dracula'
+   colorscheme molokai 
 elseif x==4
-   colorscheme lucid
+   colorscheme dracula
 elseif x==5
+   colorscheme lucid
+elseif x==6
    colorscheme one
    set background:dark
-   let g:airline_theme='one'
  endif
 
 "C++ 
@@ -35,12 +33,12 @@ set splitbelow
 autocmd filetype cpp nnoremap <C-b> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR>
 autocmd filetype cpp nnoremap <C-Enter> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
 autocmd filetype cpp imap <C-Enter> <esc>:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
-autocmd filetype cpp nnoremap <S-CR> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
-autocmd filetype cpp imap <S-CR> <esc>:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
+autocmd filetype cpp nnoremap <S-ESC> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
+autocmd filetype cpp imap <S-ESC> <esc>:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
 
 "Python 
-autocmd FileType python map <buffer> <S-CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
-autocmd FileType python imap <buffer> <S-CR> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python map <buffer> <S-ESC> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <S-ESC> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python map <buffer> <C-Enter> :w<CR>:ter python3 "%"<CR>
 autocmd FileType python imap <buffer> <C-Enter> <esc>:w<CR>:ter python3 "%"<CR>
 
@@ -70,18 +68,14 @@ set viminfo="
 let g:airline#extensions#whitespace#enabled = 0
 call plug#begin('~/.vim/plugged')
 
-Plug 'makerj/vim-pdf'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/syntastic'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 call plug#end()
-
 "Normal Mode
 "Normal Mode via AutoHotKey
 map <esc> a
@@ -170,11 +164,11 @@ imap <C-s> <esc>:w <Enter>a
 map <C-F> :Files<CR>
 
 "Tab (Command Mode)   
-map <Tab> i <Tab><esc>
+map <Tab> i <Tab><esc>a
 
 "Auto {}/[]
 imap { {}<esc>i
-imap [ []<esc>i
+imap [ []<esc>
 
 "Normal Mode Comment
 autocmd FileType python map <S-c> 0i#<esc>

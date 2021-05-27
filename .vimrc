@@ -6,7 +6,7 @@ syntax on
 set encoding=utf-8
 
 "Themes
-let x=5
+let x=2
 if x==0
    colorscheme papaya
 "   #1f1e24
@@ -35,16 +35,21 @@ elseif x==6
 "C++ 
 set splitbelow
 autocmd filetype cpp nnoremap <C-b> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR>
-autocmd filetype cpp nnoremap <C-Enter> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
-autocmd filetype cpp imap <C-Enter> <esc>:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
+autocmd filetype cpp nnoremap <C-SPACE> :w <bar> term ++shell g++ %:p -o %:p:r && %:p:r<CR>
+autocmd filetype cpp imap <C-SPACE> <esc>:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>
 autocmd filetype cpp nnoremap <S-ESC> :w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
 autocmd filetype cpp imap <S-ESC> <esc>:w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR> <bar> :!%:r<CR>
+
+"C
+set splitbelow
+autocmd filetype c nnoremap <C-SPACE> :w <bar> !gcc % -o %:r <CR> :term %:r.exe <CR>
+autocmd filetype c imap <C-SPACE> <esc>:w <bar> !gcc % -o %:r <CR> :term %:r.exe <CR>
 
 "Python 
 autocmd FileType python map <buffer> <S-ESC> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <S-ESC> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
-autocmd FileType python map <buffer> <C-Enter> :w<CR>:ter python3 "%"<CR>
-autocmd FileType python imap <buffer> <C-Enter> <esc>:w<CR>:ter python3 "%"<CR>
+autocmd FileType python map <buffer> <C-SPACE> :w<CR>:ter python3 "%"<CR>
+autocmd FileType python imap <buffer> <C-SPACE> <esc>:w<CR>:ter python3 "%"<CR>
 
 "Disables Beep Sound
 set noerrorbells visualbell t_vb=
@@ -86,7 +91,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'Yggdroot/indentLine'
-Plug 'azadkuh/vim-cmus'
 
 call plug#end()
 

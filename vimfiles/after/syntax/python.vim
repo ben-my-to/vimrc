@@ -1,11 +1,8 @@
-if dracula#should_abort('python')
-    finish
-endif
+" Add more python syntax for purify
 
-hi! link pythonBuiltinObj    Type
-hi! link pythonBuiltinObject Type
-hi! link pythonBuiltinType   Type
-hi! link pythonClassVar      DraculaPurpleItalic
-hi! link pythonExClass       Type
-hi! link pythonNone          Type
-hi! link pythonRun           Comment
+syn match pythonBraces       "[{}\[\]]"
+syn match pythonParens       "[()]"
+syn match pythonOpSymbols    "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-=\|*=\|/=\|%="
+syn match pythonEndColons    "[;,]"
+syn match pythonLogicSymbols "\(&&\)\|\(||\)\|\(!\)"
+

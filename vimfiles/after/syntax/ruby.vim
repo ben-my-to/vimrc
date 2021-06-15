@@ -1,16 +1,7 @@
-if dracula#should_abort('ruby')
-    finish
-endif
+" Add more ruby syntax for purify
 
-if ! exists('g:ruby_operators')
-    let g:ruby_operators=1
-endif
-
-hi! link rubyBlockArgument          DraculaOrangeItalic
-hi! link rubyBlockParameter         DraculaOrangeItalic
-hi! link rubyCurlyBlock             DraculaPink
-hi! link rubyGlobalVariable         DraculaPurple
-hi! link rubyInstanceVariable       DraculaPurpleItalic
-hi! link rubyInterpolationDelimiter DraculaPink
-hi! link rubyRegexpDelimiter        DraculaRed
-hi! link rubyStringDelimiter        DraculaYellow
+syn match rubyBraces       "[{}\[\]]"
+syn match rubyParens       "[()]"
+syn match rubyOpSymbols    "=\{1,3}\|!=\|<\|>\|>=\|<=\|<=>\|++\|+=\|--\|-=\|*=\|/=\|%="
+syn match rubyEndColons    "[;,]"
+syn match rubyLogicSymbols "\(&&\)\|\(||\)\|\(!\)"

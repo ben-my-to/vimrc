@@ -1,37 +1,10 @@
-if dracula#should_abort('javascript', 'javascriptreact', 'javascript.jsx')
-  finish
-endif
+" Add more syntax to make javascript sync with typescript in purify
+" https://github.com/leafgarland/typescript-vim/blob/master/syntax/typescript.vim
 
-hi! link javaScriptBraces   Delimiter
-hi! link javaScriptNumber   Constant
-hi! link javaScriptNull     Constant
-hi! link javaScriptFunction Keyword
-
-" pangloss/vim-javascript {{{
-
-hi! link jsArrowFunction           Operator
-hi! link jsClassMethodType         Keyword
-hi! link jsDestructuringAssignment DraculaOrangeItalic
-hi! link jsDocParam                DraculaOrangeItalic
-hi! link jsDocTags                 Keyword
-hi! link jsDocType                 Type
-hi! link jsDocTypeBrackets         DraculaCyan
-hi! link jsFuncArgOperator         Operator
-hi! link jsFunction                Keyword
-hi! link jsTemplateBraces          Special
-
-"}}}
-
-" maxmellon/vim-jsx-pretty {{{
-
-hi! link jsxTag             Keyword
-hi! link jsxTagName         Keyword
-hi! link jsxComponentName   Type
-hi! link jsxCloseTag        Type
-hi! link jsxAttrib          DraculaGreenItalic
-hi! link jsxCloseString     Identifier
-hi! link jsxOpenPunct       Identifier
-
-" }}}
-
-" vim: fdm=marker ts=2 sts=2 sw=2 fdl=0:
+syn match   javascriptEndColons         "[;,]"
+syn match   javascriptLogicSymbols      "\(&&\)\|\(||\)\|\(!\)"
+syn match   javascriptOpSymbols         "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-=\|*=\|/=\|%="
+syn keyword javascriptLabel             case default async readonly
+syn keyword javaScriptThis              this
+syn keyword javaScriptCustomIdentifier  arguments var let const
+syn keyword javaScriptCustomReserved    abstract boolean byte char class debugger double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile 

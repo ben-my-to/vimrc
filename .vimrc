@@ -21,7 +21,6 @@ call plug#end()
 colorscheme PaperColor 
 let g:lightline = { 'colorscheme' : 'PaperColor' }
 
-
 set background:dark
 hi NonText ctermfg=13
 

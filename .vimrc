@@ -4,38 +4,35 @@ set t_Co=256
 set laststatus=2
 
 call plug#begin('~/.vim/plugged')
-	Plug 'NLKNguyen/papercolor-theme'
 	Plug 'morhetz/gruvbox'
+	Plug 'NLKNguyen/papercolor-theme'
+	Plug 'bfrg/vim-cpp-modern'
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
 	Plug 'scrooloose/nerdtree'
 	Plug 'mg979/vim-visual-multi', { 'branch' : 'master' }
 	Plug 'ycm-core/YouCompleteMe'
-	Plug 'itchyny/lightline.vim'
 	Plug 'mbbill/undotree'
-	Plug 'tomasiser/vim-code-dark'
 call plug#end()
 
 "colorscheme gruvbox
 "let g:lightline = { 'colorscheme' : 'gruvbox' }
 
-"colorscheme PaperColor 
-"let g:lightline = { 'colorscheme' : 'PaperColor' }
+colorscheme PaperColor 
+let g:lightline = { 'colorscheme' : 'PaperColor' }
 
-colorscheme codedark
-let g:lightline = { 'colorscheme' : 'codedark' }
 
 set background:dark
-highlight NonText ctermfg=13
+hi NonText ctermfg=13
 
 autocmd VimResized * wincmd =
 autocmd GUIEnter * set vb t_vb=
 set nu
-set rnu
 set nowrap
 set smartindent
 set incsearch
-set tabstop=3 softtabstop=3
+set tabstop=4 softtabstop=4
+set shiftwidth=4
 set scrolloff=8
 set ttimeoutlen=50
 set noswapfile
@@ -49,14 +46,20 @@ nnoremap <silent> ; $
 nnoremap <silent> o o<esc>
 nnoremap <silent> O O<esc>
 nnoremap <silent> q <S-V> y
-nnoremap <silent> <S-i> <C-u>
-nnoremap <silent> <S-k> <C-d>
+nnoremap <silent> <S-k> <C-u>
+nnoremap <silent> <S-j> <C-d>
 nnoremap <silent> ` :w<bar>:source%<CR>
 nnoremap <silent> <C-t> :tabnew<CR>
 nnoremap <silent> n <C-n>
 nnoremap <silent> ' :vert term<CR>
 nnoremap <silent> <Tab> i <Tab><esc>a
 nnoremap <silent> <Leader>c v<C-]>y
+nnoremap <silent> <Leader><Space> :!clear; g++  %:r.cpp -o %:r; ./%:r<CR>
+
+inoremap { {}<Left>
+inoremap {<CR> {<CR>}<Esc>O
+inoremap {{ {
+inoremap {} {}
 
 set splitright
 let g:NERDTreeWinPos = "right"
@@ -84,5 +87,3 @@ if has("persistent_undo")
 	let &undodir=target_path
 	set undofile
 endif
-
-autocmd filetype cpp nnoremap <silent> <Leader><Space> :vert term<CR>g++ main.cpp -o main<CR>clear<CR>./main<CR>

@@ -1,4 +1,4 @@
-# TODO: auto-tab indentations
+" TODO: auto-tab indentations
 
 syntax on
 set encoding=utf-8

@@ -1,3 +1,5 @@
+# TODO: auto-tab indentations
+
 syntax on
 set encoding=utf-8
 set t_Co=256

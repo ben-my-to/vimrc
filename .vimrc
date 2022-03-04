@@ -6,14 +6,18 @@ set laststatus=2
 call plug#begin('~/.vim/plugged')
     Plug 'morhetz/gruvbox'
     Plug 'NLKNguyen/papercolor-theme'
+    Plug 'wojciechkepka/vim-github-dark'
     Plug 'bfrg/vim-cpp-modern'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'scrooloose/nerdtree'
     Plug 'mg979/vim-visual-multi', { 'branch' : 'master' }
     Plug 'ycm-core/YouCompleteMe'
+    Plug 'sheerun/vim-polyglot'
     Plug 'mbbill/undotree'
 call plug#end()
+
+"colorscheme ghdark
 
 colorscheme gruvbox
 let g:lightline = { 'colorscheme' : 'gruvbox' }
@@ -53,7 +57,7 @@ nnoremap <silent> <C-t> :tabnew<CR>
 nnoremap <silent> n <C-n>
 nnoremap <silent> ' :vert term<CR>
 nnoremap <silent> <Tab> i <Tab><esc>a
-nnoremap <silent> <Leader><Space> :!clear; g++  %:r.cpp -o %:r; ./%:r<CR>
+nnoremap <silent> <Leader><Space> :!clear && g++ %:r.cpp -o %:r && ./%:r<CR>
 
 inoremap { {}<Left>
 inoremap {<CR> {<CR>}<Esc>O
@@ -76,11 +80,12 @@ nnoremap <silent> <Leader>j :wincmd j<CR>
 nnoremap <silent> <Leader>h :wincmd h<CR>
 nnoremap <silent> <Leader>l :wincmd l<CR>
 nnoremap <silent> <Leader>t gT
+nnoremap <silent> <Leader>b :!clear && pycodestyle %:r.py && pylint %:r.py && flake8 %:r.py<CR>
 
 if has("persistent_undo")
     let target_path = expand('~/.undodir')
 
-   if !isdirectory(target_path)
+    if !isdirectory(target_path)
         call mkdir(target_path, "p", 0700)
     endif
 

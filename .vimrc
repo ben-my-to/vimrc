@@ -2,31 +2,31 @@ syntax on
 set encoding=utf-8
 set t_Co=256
 set laststatus=2
+set foldmethod=manual
 
 call plug#begin('~/.vim/plugged')
     Plug 'morhetz/gruvbox'
     Plug 'NLKNguyen/papercolor-theme'
-    Plug 'wojciechkepka/vim-github-dark'
     Plug 'bfrg/vim-cpp-modern'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'scrooloose/nerdtree'
     Plug 'mg979/vim-visual-multi', { 'branch' : 'master' }
-    Plug 'ycm-core/YouCompleteMe'
     Plug 'sheerun/vim-polyglot'
     Plug 'mbbill/undotree'
 call plug#end()
 
-"colorscheme ghdark
-
-colorscheme gruvbox
-let g:lightline = { 'colorscheme' : 'gruvbox' }
+"colorscheme gruvbox
+"let g:lightline = { 'colorscheme' : 'gruvbox' }
 
 "colorscheme PaperColor 
 "let g:lightline = { 'colorscheme' : 'PaperColor' }
 
 set background:dark
 hi NonText ctermfg=13
+
+colorscheme peachpuff
+hi Comment ctermfg=green
 
 autocmd VimResized * wincmd =
 autocmd GUIEnter * set vb t_vb=
@@ -44,12 +44,10 @@ set backspace=indent,eol,start
 
 let mapleader = " "
 
-nnoremap <silent> da diw
 nnoremap <silent> sa viw
 nnoremap <silent> ; $
 nnoremap <silent> o o<esc>
 nnoremap <silent> O O<esc>
-nnoremap <silent> q <S-V> y
 nnoremap <silent> <S-k> <C-u>
 nnoremap <silent> <S-j> <C-d>
 nnoremap <silent> ` :w<bar>:source%<CR>
@@ -57,7 +55,7 @@ nnoremap <silent> <C-t> :tabnew<CR>
 nnoremap <silent> n <C-n>
 nnoremap <silent> ' :vert term<CR>
 nnoremap <silent> <Tab> i <Tab><esc>a
-nnoremap <silent> <Leader><Space> :!clear && g++ %:r.cpp -o %:r && ./%:r<CR>
+nnoremap <silent> <Leader><space> :!clear && ./%:r.py<CR>
 
 inoremap { {}<Left>
 inoremap {<CR> {<CR>}<Esc>O
@@ -80,7 +78,6 @@ nnoremap <silent> <Leader>j :wincmd j<CR>
 nnoremap <silent> <Leader>h :wincmd h<CR>
 nnoremap <silent> <Leader>l :wincmd l<CR>
 nnoremap <silent> <Leader>t gT
-nnoremap <silent> <Leader>b :!clear && pycodestyle %:r.py && pylint %:r.py && flake8 %:r.py<CR>
 
 if has("persistent_undo")
     let target_path = expand('~/.undodir')
